@@ -279,8 +279,3 @@ with col[1]:
         st.write("Hasil AMR")
         if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
             st.dataframe(amrFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
-    # Tab AMR233333
-    with tabs[6]:
-        st.write("Ha3333333333333sil AMR2")
-        if 'lalulalu' in locals() and 'lalu' in locals() and 'akhir' in locals():
-            st.dataframe(amrFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini))
