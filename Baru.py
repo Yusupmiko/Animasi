@@ -83,9 +83,18 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     kroscek['FOTO AKHIR'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_kini
     kroscek['FOTO LALU'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalu
     kroscek['FOTO LALU2'] = path_foto1 + kroscek_temp['IDPEL'].astype(str) + path_foto2 + blth_lalulalu
-    kroscek['KET_KWH'] = ['SESUAI' for _ in range(len(kroscek))]
     #kroscek['KET_KWH'] = np.where(kroscek_temp['SAHLWBP_y'] == 0, 'SESUAI', 'TIDAK SESUAI')
-    kroscek['TINDAK LANJUT'] = ''
+     kroscek['KET_KWH'] = kroscek['KET'].apply(lambda x: '<select onfocus="this.options[0].selected = true;">'
+                                                  '<option value="" disabled selected hidden></option>'  # Nilai default kosong
+                                                  '<option value="SESUAI">SESUAI</option>' 
+                                                  '<option value="SALAH STAN">SALAH STAN</option>' 
+                                                  '<option value="TELAT/SALAH PDL">TELAT/SALAH PDL</option>' 
+                                                  '<option value="SALAH FOTO">SALAH FOTO</option>' 
+                                                  '<option value="FOTO BURAM">FOTO BURAM</option>' 
+                                                  '<option value="LEBIH TAGIH">LEBIH TAGIH</option>' 
+                                                  '<option value="BUKAN FOTO KWH">BUKAN FOTO KWH</option>' 
+                                                  '<option value="BENCANA">BENCANA</option>'
+                                                  '</select>')
     kroscek['HASIL PEMERIKSAAN'] = ''
 
     # Menambahkan tautan HTML ke kolom gambar
@@ -95,29 +104,6 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
 
     # Mengembalikan dataframe kroscek
     return kroscek
-
-# Fungsi untuk menampilkan DataFrame dengan selectbox di kolom KET_KWH
-def show_image_with_selectbox(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
-    df = copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
-    if df.empty:
-        st.warning("No data available after applying the filter.")
-        return
-
-    # Konfigurasi AgGrid
-    gd = GridOptionsBuilder.from_dataframe(df)
-    gd.configure_default_column(editable=True)
-    gd.configure_column('KET_KWH', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': ['SESUAI', 'TIDAK SESUAI', 'FOTO BURAM']})
-    
-    grid_options = gd.build()
-
-    # Tampilkan AgGrid dengan konfigurasi selectbox di kolom KET_KWH
-    grid_response = AgGrid(df, gridOptions=grid_options, editable=True, height=400)
-
-    # Akses dataframe yang sudah diperbarui oleh pengguna
-    updated_df = grid_response['data']
-    st.write("DataFrame yang diperbarui:")
-    st.dataframe(updated_df)
-
 
 def maksFilter(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
     kroscek = copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini)
