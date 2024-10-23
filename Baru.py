@@ -95,6 +95,13 @@ def copyDataframe(lalulalu, lalu, akhir, blth_lalulalu, blth_lalu, blth_kini):
                                                   '<option value="BUKAN FOTO KWH">BUKAN FOTO KWH</option>' 
                                                   '<option value="BENCANA">BENCANA</option>'
                                                   '</select>')
+    kroscek['TINDAK LANJUT'] = kroscek['KET'].apply(lambda x: '<select onfocus="this.options[0].selected = true;">'
+                                                  '<option value="" disabled selected hidden></option>'  # Nilai default kosong
+                                                  '<option value="3 BULAN TIDAK DAPAT FOTO STAN">3 BULAN TIDAK DAPAT FOTO STAN</option>' 
+                                                  '<option value="6 BULAN TIDAK DAPAT FOTO STAN">6 BULAN TIDAK DAPAT FOTO STAN</option>' 
+                                                  '<option value="T720">720</option>'
+                                                  '</select>')
+
     kroscek['HASIL PEMERIKSAAN'] = ''
 
     # Menambahkan tautan HTML ke kolom gambar
